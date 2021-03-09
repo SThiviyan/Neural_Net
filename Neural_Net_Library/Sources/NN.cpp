@@ -60,22 +60,30 @@ void NN::NN::TrainNetwork(std::vector<float> Trainingsset, std::vector<float> Ta
         {
             Matrix InputMatrix = Matrix(BatchSize, 1);
             
+            std::vector<float> CurrentBatch;
             for (int r = (BatchSize * n) - BatchSize; r < (BatchSize * n); r++) {
-                for (int i = 0; i < BatchSize; i++) {
-                    InputMatrix(i, 0) = Trainingsset[r];
-                    
-                }
+                CurrentBatch.push_back(Trainingsset[r]);
             }
+            
+            for (int z = 0; z < BatchSize; z++) {
+                InputMatrix(z, 0) = CurrentBatch[z];
+            }
+            
+            for (int i = 0; i < BatchSize; i++) {
+              
+            }
+            
             
             Layers[0].OverrideValMatrix(&InputMatrix);
             
             feedforward();
+            std::cout << "Training Run Nr." << n << ":" << std::endl;
             PrintAll();
-            
+            std::cout << std::endl << std::endl << std::endl << std::endl;
             
             std::vector<float> BackpropCurrentTargets;
         
-            for (int r = (TargetBatchSize * (n + 1)) - TargetBatchSize; r < (TargetBatchSize * (n + 1)); r++) {
+            for (int r = (TargetBatchSize * n) - TargetBatchSize; r < (TargetBatchSize * n); r++) {
                 BackpropCurrentTargets.push_back(Targets[r]);
             }
             
@@ -110,7 +118,6 @@ void NN::NN::feedforward()
     {
         this->Layers[L].feedforwardValues(this->Ac);
     }
-    
 }
 
 void NN::NN::backpropagate(std::vector<float> CurrentTargets)
@@ -123,18 +130,76 @@ void NN::NN::PrintAll()
 {
     for (int n = 0; n < LayerNum; n++) {
         
-        Matrix Val = Layers[n].GetValMatrix();
         
-        
-        std::cout << "Layer " << n << ":" << std::endl;
-        for (int j = 0; j < Val.getRows(); j++) {
-            for (int z = 0; z < Val.getCols(); z++) {
-                std::cout << Val(j, z);
+        if(n == 0)
+        {
+            Matrix Val = Layers[n].GetValMatrix();
+
+            std::cout << "INPUTLAYER:" << std::endl;
+            
+            std::cout << std::endl << "ValMatrix:" << std::endl;
+            for (int j = 0; j < Val.getRows(); j++) {
+                for (int z = 0; z < Val.getCols(); z++) {
+                    std::cout << Val(j, z);
+                }
+                std::cout << std::endl;
             }
-            std::cout << std::endl;
+            
+            Matrix Weight = Layers[n].GetWeightMatrix();
+            
+            std::cout << std::endl << "WeightMatrix:" << std::endl;
+            for (int j = 0; j < Weight.getRows(); j++) {
+                for (int z = 0; z < Weight.getCols(); z++) {
+                    std::cout << Weight(j, z) << " ";
+                }
+                std::cout << std::endl;
+            }
+            
+        }
+        else if(n > 0 && n < (LayerNum - 1))
+        {
+            Matrix Val = Layers[n].GetValMatrix();
+
+            
+            std::cout << "HIDDENLAYER " << n << ":" << std::endl;
+            
+            std::cout << std::endl << "ValMatrix:" << std::endl;
+            for (int j = 0; j < Val.getRows(); j++) {
+                for (int z = 0; z < Val.getCols(); z++) {
+                    std::cout << Val(j, z) << " ";
+                }
+                std::cout << std::endl;
+            }
+            
+            
+            Matrix Weight = Layers[n].GetWeightMatrix();
+            
+            std::cout << std::endl << "WeightMatrix:" << std::endl;
+            for (int j = 0; j < Weight.getRows(); j++) {
+                for (int z = 0; z < Weight.getCols(); z++) {
+                    std::cout << Weight(j, z) << " ";
+                }
+                std::cout << std::endl;
+            }
+            
+        }
+        else
+        {
+            Matrix Val = Layers[n].GetValMatrix();
+            
+            std::cout << "OUTPUTLAYER:" << std::endl;
+            
+            std::cout << std::endl << "ValMatrix:" << std::endl;
+            for (int j = 0; j < Val.getRows(); j++) {
+                for (int z = 0; z < Val.getCols(); z++) {
+                    std::cout << Val(j, z);
+                }
+                std::cout << std::endl;
+            }
         }
         
-        std::cout << std::endl;
+        
+        std::cout << std::endl << std::endl;
         
     }
 }

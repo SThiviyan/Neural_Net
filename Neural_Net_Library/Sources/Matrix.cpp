@@ -6,6 +6,8 @@
 //
 
 #include "Matrix.h"
+#include <stdio.h>
+#include <time.h>
 
 
 //MARK: Constructor and Destructor
@@ -49,6 +51,7 @@ void NN::Matrix::MultiplyByScalar(float Scalar)
 
 void NN::Matrix::RandomWeightInit()
 {
+    srand(time(NULL));
     for (int row = 0; row < rows; row++) {
         for (int col = 0; col < cols; col++) {
             Vals[row][col] = float(rand() % 100 + 1) / 100;
