@@ -36,6 +36,7 @@ namespace NN {
         void feedforward();
         void backpropagate(std::vector<float> CurrentTargets);
         
+        float CalculateCost(std::vector<float> CurrentTargets);
         
         void PrintAll();
         
@@ -44,6 +45,9 @@ namespace NN {
         std::vector<int> topology;
         int LayerNum;
         Layer* Layers;
+        
+        float Cost;
+        std::vector<Matrix*> ErrorMatrices;
 
         float LearningRate;
         ActivationFunctions Ac;

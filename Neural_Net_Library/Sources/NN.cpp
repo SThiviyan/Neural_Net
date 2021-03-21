@@ -11,7 +11,7 @@
 NN::NN::NN(std::vector<int> topology, ActivationFunctions Ac, float LearningRate)
 {
     this->topology = topology;
-    this->LayerNum = topology.size();
+    this->LayerNum = int(topology.size());
     
     this->LearningRate = LearningRate;
     this->Ac = Ac;
@@ -52,46 +52,46 @@ void NN::NN::TrainNetwork(std::vector<float> Trainingsset, std::vector<float> Ta
     if(Targets.size() % topology[LayerNum - 1] == 0 && Trainingsset.size() % topology[0] == 0)
     {
         
-        int NumBatches = Trainingsset.size() / topology[0];
+        int NumBatches = int(Trainingsset.size() / topology[0]);
         int BatchSize = topology[0];
         int TargetBatchSize = topology[LayerNum - 1];
         
-        for(int n = 1; n <= NumBatches; n++)
+        for(int j = 0; j < 2; j++)
         {
-            Matrix InputMatrix = Matrix(BatchSize, 1);
+          for(int n = 1; n <= NumBatches; n++)
+          {
+              Matrix InputMatrix = Matrix(BatchSize, 1);
             
-            std::vector<float> CurrentBatch;
-            for (int r = (BatchSize * n) - BatchSize; r < (BatchSize * n); r++) {
-                CurrentBatch.push_back(Trainingsset[r]);
-            }
+              std::vector<float> CurrentBatch;
+              for (int r = (BatchSize * n) - BatchSize; r < (BatchSize * n); r++) {
+                  CurrentBatch.push_back(Trainingsset[r]);
+              }
             
-            for (int z = 0; z < BatchSize; z++) {
-                InputMatrix(z, 0) = CurrentBatch[z];
-            }
+              for (int z = 0; z < BatchSize; z++) {
+                  InputMatrix(z, 0) = CurrentBatch[z];
+              }
             
-            for (int i = 0; i < BatchSize; i++) {
-              
-            }
+         
             
+              Layers[0].OverrideValMatrix(&InputMatrix);
             
-            Layers[0].OverrideValMatrix(&InputMatrix);
+              feedforward();
+           
+              std::cout << "Training Run Nr." << n << ":" << std::endl;
+              PrintAll();
+              std::cout << std::endl << std::endl << std::endl << std::endl;
             
-            feedforward();
-            std::cout << "Training Run Nr." << n << ":" << std::endl;
-            PrintAll();
-            std::cout << std::endl << std::endl << std::endl << std::endl;
-            
-            std::vector<float> BackpropCurrentTargets;
-        
-            for (int r = (TargetBatchSize * n) - TargetBatchSize; r < (TargetBatchSize * n); r++) {
-                BackpropCurrentTargets.push_back(Targets[r]);
-            }
+              std::vector<float> BackpropCurrentTargets;
+          
+              for (int r = (TargetBatchSize * n) - TargetBatchSize; r < (TargetBatchSize * n); r++) {
+                  BackpropCurrentTargets.push_back(Targets[r]);
+               }
             
                
-            backpropagate(BackpropCurrentTargets);
+              backpropagate(BackpropCurrentTargets);
              //PrintAll();
         }
-        
+        }
     }
     else
     {
@@ -122,9 +122,74 @@ void NN::NN::feedforward()
 
 void NN::NN::backpropagate(std::vector<float> CurrentTargets)
 {
+    //std::cout << CalculateCost(CurrentTargets) << std::endl;
+    
+    std::vector<Matrix> Gradients;
+    
+    for (int n = LayerNum; n >= 0; n--) {
+        
+        if(n == LayerNum - 1)
+        {
+            
+            //MARK: Calculating for OutputLayer
+            
+            //DerivativeOutputCost
+            Matrix DerivativeCostActivation = Layers[n].GetValMatrix();
+            
+            switch(Ac)
+            {
+                case SIGMOID:
+                    DerivativeCostActivation.ActivateNeurons(D_SIGMOID);
+                    break;
+                case RELU:
+                    DerivativeCostActivation.ActivateNeurons(D_RELU);
+                    break;
+                default:
+                    break;
+            }
+            
+            Matrix DerivativeActivationWeight = Layers[n - 1].GetValMatrix();
+            
+            
+            Matrix DeltaWeights = (DerivativeCostActivation * DerivativeActivationWeight).GetTransposedMatrix();
+            
+            
+            
+            
+        
+            
+            //PrintAll();
+        }
+        else
+        {
+            
+        }
+        
+    }
     
 }
 
+
+float NN::NN::CalculateCost(std::vector<float> CurrentTargets)
+{
+    
+    Matrix OutputMatrix = Layers[LayerNum - 1].GetValMatrix();
+        
+    Cost = 0;
+    
+    std::vector<float> CostArray;
+    for (int n = 0; n < OutputMatrix.getRows(); n++) {
+        float Temp = CurrentTargets[n] - OutputMatrix(n, 0);
+        CostArray.push_back((Temp * Temp) / 2);
+    }
+    
+    for (int n = 0; n < OutputMatrix.getRows(); n++) {
+        Cost += CostArray[n];
+    }
+    
+    
+    return Cost;
+}
 
 void NN::NN::PrintAll()
 {

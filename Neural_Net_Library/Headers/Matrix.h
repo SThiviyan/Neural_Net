@@ -68,7 +68,7 @@ namespace NN
         {
             Matrix MultipliedMatrix(this->rows, SecondMatrix.cols);
             
-            if(this->cols == SecondMatrix.rows && this->rows != SecondMatrix.cols)
+            if(this->cols == SecondMatrix.rows && this->cols != SecondMatrix.cols)
             {
                 
                 for(int RowMatrixOne = 0; RowMatrixOne < this->rows; RowMatrixOne++)
@@ -94,10 +94,31 @@ namespace NN
                 }
             }
             
+            
             return MultipliedMatrix;
         }
         
-    
+        Matrix operator + ( Matrix& SecondMatrix)
+        {
+            Matrix NewMatrix = Matrix(this->rows, this->cols);
+
+            if(this->rows == SecondMatrix.rows && this->cols == SecondMatrix.cols)
+            {
+                for (int n = 0; n < rows; n++) {
+                    for (int j = 0; j < cols; j++) {
+                        NewMatrix(n, j) = Vals[n][j] + SecondMatrix(n, j);
+                    }
+                }
+               
+            }
+            else
+            {
+                std::cout << "Can't Add them together" << std::endl;
+            }
+            
+            
+            return NewMatrix;
+        }
         
         
         //Scalar Multiplication
@@ -106,7 +127,7 @@ namespace NN
         
         
         //Return Transposed Matrix; ex. 3 x 2 -> 2 x 3
-        Matrix* GetTransposedMatrix();
+        Matrix GetTransposedMatrix();
         
         
         //Random Weight Initalization

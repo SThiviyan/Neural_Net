@@ -11,6 +11,7 @@
 NN::Layer::Layer(int NeuronNum, int topologyNextElement, Layer* PreviousLayer)
 {
     this->NeuronNum = NeuronNum;
+    this->topologyNext = topologyNextElement;
     ValMatrix = new Matrix(NeuronNum, 1);
     
     if(PreviousLayer != nullptr)
@@ -42,6 +43,9 @@ void NN::Layer::OverrideValMatrix(Matrix *InputValMatrix)
 
 void NN::Layer::OverrideWeightMatrix(Matrix *NewWeights)
 {
+    //WeightMatrix = nullptr;
+    WeightMatrix = new Matrix(topologyNext ,NeuronNum);
+
     for (int row = 0; row < WeightMatrix->getRows(); row++) {
              for (int col = 0; col < WeightMatrix->getCols(); col++) {
                  WeightMatrix->operator()(row, col) = NewWeights->operator()(row, col);
@@ -64,6 +68,7 @@ void NN::Layer::feedforwardValues(ActivationFunctions Ac)
         
     }
 }
+
 
 
 NN::Matrix NN::Layer::GetValMatrix()
