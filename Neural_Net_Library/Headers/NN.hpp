@@ -47,7 +47,7 @@ namespace NN {
         Layer* Layers;
         
         float Cost;
-        std::vector<Matrix*> ErrorMatrices;
+        std::vector<Matrix> Gradients;
 
         float LearningRate;
         ActivationFunctions Ac;

@@ -94,8 +94,8 @@
             filePath = "Neural_Net_Library/Sources/NN.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "64"
-            endingLineNumber = "64"
+            startingLineNumber = "65"
+            endingLineNumber = "65"
             landmarkName = "NN::NN::TrainNetwork(Trainingsset, Targets)"
             landmarkType = "7">
          </BreakpointContent>
@@ -222,40 +222,8 @@
             filePath = "Neural_Net_Library/Sources/NN.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "183"
-            endingLineNumber = "183"
-            landmarkName = "NN::NN::CalculateCost(CurrentTargets)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "4052CE45-EE17-480B-8B47-CD0CDFD416EE"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Neural_Net_Library/Sources/NN.cpp"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "138"
-            endingLineNumber = "138"
-            landmarkName = "NN::NN::backpropagate(CurrentTargets)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "10CF1D76-79CF-403E-9713-EE8731C24841"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Neural_Net_Library/Sources/NN.cpp"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "150"
-            endingLineNumber = "150"
+            startingLineNumber = "162"
+            endingLineNumber = "162"
             landmarkName = "NN::NN::backpropagate(CurrentTargets)"
             landmarkType = "7">
          </BreakpointContent>
@@ -270,8 +238,264 @@
             filePath = "Neural_Net_Library/Sources/NN.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "130"
-            endingLineNumber = "130"
+            startingLineNumber = "134"
+            endingLineNumber = "134"
+            landmarkName = "NN::NN::backpropagate(CurrentTargets)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "215CB4BD-22A3-40B2-B98E-291D69429D96"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Neural_Net_Library/Sources/NN.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "32"
+            endingLineNumber = "32"
+            landmarkName = "NN::NN::NN(topology, Ac, LearningRate)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "03CD6CA6-EBF8-4067-A870-E09C583F58E8"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Neural_Net_Library/Sources/NN.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "152"
+            endingLineNumber = "152"
+            landmarkName = "NN::NN::backpropagate(CurrentTargets)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "BED9B666-059B-49E7-B7A0-E402EB6AB039"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Neural_Net_Library/Sources/NN.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "165"
+            endingLineNumber = "165"
+            landmarkName = "NN::NN::backpropagate(CurrentTargets)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "BED9B666-059B-49E7-B7A0-E402EB6AB039 - 365700d17e898746"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "NN::NN::backpropagate(std::__1::vector&lt;float, std::__1::allocator&lt;float&gt; &gt;)"
+                  moduleName = "Neural_Net_Library"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/thiviyansaravanamuthu/Nextcloud/Programming/Development/Cpp-Projects/ML/Neural_Net_Library/Neural_Net_Library/Sources/NN.cpp"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "164"
+                  endingLineNumber = "164"
+                  offsetFromSymbolStart = "577">
+               </Location>
+               <Location
+                  uuid = "BED9B666-059B-49E7-B7A0-E402EB6AB039 - 365700d17e898746"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "NN::NN::backpropagate(std::__1::vector&lt;float, std::__1::allocator&lt;float&gt; &gt;)"
+                  moduleName = "Neural_Net_Library"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/thiviyansaravanamuthu/Nextcloud/Programming/Development/Cpp-Projects/ML/Neural_Net_Library/Neural_Net_Library/Sources/NN.cpp"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "164"
+                  endingLineNumber = "164"
+                  offsetFromSymbolStart = "665">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "2699FAB6-8F9D-41D5-B6D1-0CB73430D1A3"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Neural_Net_Library/Sources/NN.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "154"
+            endingLineNumber = "154"
+            landmarkName = "NN::NN::backpropagate(CurrentTargets)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "86C4531B-5F00-4160-A58A-1AFE67E69B2D"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Neural_Net_Library/Sources/NN.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "199"
+            endingLineNumber = "199"
+            landmarkName = "NN::NN::backpropagate(CurrentTargets)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "BE21763A-A212-4138-9F26-69B82062D990"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Neural_Net_Library/Sources/NN.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "194"
+            endingLineNumber = "194"
+            landmarkName = "NN::NN::backpropagate(CurrentTargets)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "68B3C5AD-193B-430A-B6C7-91CE8BCFDA79"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Neural_Net_Library/Sources/NN.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "196"
+            endingLineNumber = "196"
+            landmarkName = "NN::NN::backpropagate(CurrentTargets)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "77CAEC4F-8996-4F81-B491-32666B8E3049"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Neural_Net_Library/Sources/NN.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "193"
+            endingLineNumber = "193"
+            landmarkName = "NN::NN::backpropagate(CurrentTargets)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "1EC93C33-E70B-4674-8866-C827F0ADC1F2"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Neural_Net_Library/Sources/NN.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "213"
+            endingLineNumber = "213"
+            landmarkName = "NN::NN::backpropagate(CurrentTargets)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "D9E8BD05-1EA7-43E1-BDF2-C090706B6D3D"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Neural_Net_Library/Sources/NN.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "210"
+            endingLineNumber = "210"
+            landmarkName = "NN::NN::backpropagate(CurrentTargets)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "BCE2BDBE-370F-41B8-8FF1-479057AF016C"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Neural_Net_Library/Sources/NN.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "167"
+            endingLineNumber = "167"
+            landmarkName = "NN::NN::backpropagate(CurrentTargets)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "BCE2BDBE-370F-41B8-8FF1-479057AF016C - 365700d17e8987c2"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "NN::NN::backpropagate(std::__1::vector&lt;float, std::__1::allocator&lt;float&gt; &gt;)"
+                  moduleName = "Neural_Net_Library"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/thiviyansaravanamuthu/Nextcloud/Programming/Development/Cpp-Projects/ML/Neural_Net_Library/Neural_Net_Library/Sources/NN.cpp"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "168"
+                  endingLineNumber = "168"
+                  offsetFromSymbolStart = "788">
+               </Location>
+               <Location
+                  uuid = "BCE2BDBE-370F-41B8-8FF1-479057AF016C - 365700d17e8987c2"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "NN::NN::backpropagate(std::__1::vector&lt;float, std::__1::allocator&lt;float&gt; &gt;)"
+                  moduleName = "Neural_Net_Library"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/thiviyansaravanamuthu/Nextcloud/Programming/Development/Cpp-Projects/ML/Neural_Net_Library/Neural_Net_Library/Sources/NN.cpp"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "168"
+                  endingLineNumber = "168"
+                  offsetFromSymbolStart = "863">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "2FF3C9BA-9079-43FB-8493-3157F635D39F"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Neural_Net_Library/Sources/NN.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "201"
+            endingLineNumber = "201"
             landmarkName = "NN::NN::backpropagate(CurrentTargets)"
             landmarkType = "7">
          </BreakpointContent>

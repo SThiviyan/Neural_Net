@@ -85,11 +85,11 @@ namespace NN
             }
             else if(this->cols == SecondMatrix.cols && this->rows == SecondMatrix.rows)
             {
-                for(int col = 0; col < this->cols; col++)
+                for(int row = 0; row < this->rows; row++)
                 {
-                    for(int row = 0; row < this->rows; row++)
+                    for(int col = 0; col < this->cols; col++)
                     {
-                        MultipliedMatrix(col, row) = Vals[col][row] * SecondMatrix(col, row);
+                        MultipliedMatrix(row, col) = Vals[row][col] * SecondMatrix(row, col);
                     }
                 }
             }
@@ -120,6 +120,28 @@ namespace NN
             return NewMatrix;
         }
         
+        
+        Matrix operator - (Matrix& SecondMatrix)
+        {
+            Matrix NewMatrix = Matrix(this->rows, this->cols);
+            
+            if(this->rows == SecondMatrix.rows && this->cols == SecondMatrix.cols)
+            {
+                for (int n = 0; n < rows; n++) {
+                    for (int j = 0; j < cols; j++) {
+                        NewMatrix(n, j) = Vals[n][j] - SecondMatrix(n, j);
+                    }
+                }
+               
+            }
+            else
+            {
+                std::cout << "Can't Subtract them" << std::endl;
+            }
+            
+            
+            return NewMatrix;
+        }
         
         //Scalar Multiplication
         void MultiplyByScalar(float Scalar);

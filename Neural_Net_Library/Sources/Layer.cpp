@@ -48,7 +48,7 @@ void NN::Layer::OverrideWeightMatrix(Matrix *NewWeights)
 
     for (int row = 0; row < WeightMatrix->getRows(); row++) {
              for (int col = 0; col < WeightMatrix->getCols(); col++) {
-                 WeightMatrix->operator()(row, col) = NewWeights->operator()(row, col);
+                 WeightMatrix->operator()(row, col) = WeightMatrix->operator()(row, col) + NewWeights->operator()(row, col);
              }
              
      }
