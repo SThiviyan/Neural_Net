@@ -53,6 +53,8 @@ void NN::NN::TrainNetwork(std::vector<float> Trainingsset, std::vector<float> Ta
     {
         
         int NumBatches = int(Trainingsset.size() / topology[0]);
+        this->NumBatch = NumBatches;
+        
         int BatchSize = topology[0];
         int TargetBatchSize = topology[LayerNum - 1];
         
@@ -89,10 +91,12 @@ void NN::NN::TrainNetwork(std::vector<float> Trainingsset, std::vector<float> Ta
             
               std::cout << CalculateCost(BackpropCurrentTargets) << std::endl;
 
+              //PrintAll();
+              
               backpropagate(BackpropCurrentTargets);
               
               
-              //PrintAll();
+            
         }
             std::cout << std::endl << std::endl << std::endl << std::endl;
         }
@@ -128,7 +132,7 @@ void NN::NN::backpropagate(std::vector<float> CurrentTargets)
 {
     //std::cout << CalculateCost(CurrentTargets) << std::endl;
     
-    std::vector<Matrix> ErrorGradients;
+    std::vector<Matrix> CurrentErrorGradients;
     
     for (int n = LayerNum - 1; n > 0; n--) {
        
@@ -145,7 +149,6 @@ void NN::NN::backpropagate(std::vector<float> CurrentTargets)
             }
         
             Matrix DerivativeCostActivation = Activations - Targets;
-            DerivativeCostActivation.MultiplyByScalar(2.f);
     
             Matrix PreWeight = Layers[n - 1].GetWeightMatrix();
             Matrix PreActivations = Layers[n - 1].GetValMatrix();
@@ -163,7 +166,10 @@ void NN::NN::backpropagate(std::vector<float> CurrentTargets)
             }
             
             Matrix Gradient = DerivativeCostActivation * DerivativeActivationSum;
-            ErrorGradients.push_back(Gradient);
+            
+            CurrentErrorGradients.push_back(Gradient);
+            
+            //this->ErrorGradients[(LayerNum - 1) - n].push_back(Gradient);
             
         }
         
@@ -171,10 +177,14 @@ void NN::NN::backpropagate(std::vector<float> CurrentTargets)
         {
             //MARK: Calculating Gradient in inner Layers
             
-            Matrix Pre_Gradient = ErrorGradients[(LayerNum-1) - n - 1];
-            Matrix CorrespondingWeight = Layers[n].GetWeightMatrix();
+            Matrix Pre_Gradient = CurrentErrorGradients[(LayerNum-1) - n - 1];
             
-            Matrix DerivativeCostHidden = (Pre_Gradient * CorrespondingWeight).GetTransposedMatrix();
+            Matrix CorrespondingWeight = Layers[n].GetWeightMatrix().GetTransposedMatrix();
+            
+            Matrix DerivativeCostHidden = CorrespondingWeight * Pre_Gradient;
+            
+       
+            
             
             
             Matrix PreWeight = Layers[n - 1].GetWeightMatrix();
@@ -193,27 +203,71 @@ void NN::NN::backpropagate(std::vector<float> CurrentTargets)
             }
             
             Matrix Gradient = DerivativeCostHidden * DerivativeActivationSum;
-            ErrorGradients.push_back(Gradient);
-            
+
+            CurrentErrorGradients.push_back(Gradient);
+            //this->ErrorGradients[(LayerNum - 1) - n].push_back(Gradient);
+
         }
         
     }
     
-    for (int j = LayerNum - 1; j > 0; j--)
+    this->ErrorGradients.push_back(CurrentErrorGradients);
+    
+    int AverageCost = 0;
+    AverageCost += CalculateCost(CurrentTargets);
+    
+    if(ErrorGradients.size() == NumBatch)
     {
-        int LM = LayerNum - 1;
-        Matrix CurrentGradient = ErrorGradients[LM - j].GetTransposedMatrix();
-        Matrix PreviousActivations = Layers[j - 1].GetValMatrix();
-        
-        Matrix DeltaWeights = (PreviousActivations * CurrentGradient).GetTransposedMatrix();
-        DeltaWeights.MultiplyByScalar(this->LearningRate);
+        AverageCost = AverageCost / NumBatch;
         
         
-        Layers[j - 1].OverrideWeightMatrix(&DeltaWeights);
+        std::vector<Matrix> AverageGradients;
+        for (int n = 0; n < ErrorGradients.size(); n++) {
+            for (int j = 0; j < ErrorGradients[n].size(); j++) {
+                
+                Matrix Gradient = ErrorGradients[n][j];
+
+                if(n == 0)
+                {
+                    AverageGradients.push_back(Gradient);
+                }
+                else if(n > 0 && n < (NumBatch - 1))
+                {
+                    AverageGradients[j] = AverageGradients[j] + Gradient;
+                    
+                    
+                }
+                else
+                {
+                    AverageGradients[j] = AverageGradients[j] + Gradient;
+                    AverageGradients[j].DivideByScalar(NumBatch);
+                }
+                
+            
+        }
+        
+        
+        ErrorGradients.clear();
+        AverageCost = 0;
+       }
+    
+       
+       for (int L = LayerNum - 1; L > 0; L--)
+       {
+           Matrix CurrentGradient = AverageGradients[(LayerNum - 1) - L];
+           Matrix CorrespondingActivations = Layers[L - 1].GetValMatrix().GetTransposedMatrix();
+           
+           Matrix DeltaWeights = CurrentGradient * CorrespondingActivations;
+           //DeltaWeights.MultiplyByScalar(LearningRate);
+       
+           Layers[L - 1].OverrideWeightMatrix(&DeltaWeights);
+           
+           
+       }
+        
+        
         
     }
-    
-    
 }
 
 
@@ -227,7 +281,9 @@ float NN::NN::CalculateCost(std::vector<float> CurrentTargets)
     std::vector<float> CostArray;
     for (int n = 0; n < OutputMatrix.getRows(); n++) {
         float Temp = OutputMatrix(n, 0) - CurrentTargets[n];
-        CostArray.push_back(Temp * Temp);
+        Temp *= Temp;
+        Temp = 0.5 * Temp;
+        CostArray.push_back(Temp);
     }
     
     for (int n = 0; n < OutputMatrix.getRows(); n++) {

@@ -48,6 +48,15 @@ void NN::Matrix::MultiplyByScalar(float Scalar)
     
 }
 
+void NN::Matrix::DivideByScalar(float Scalar)
+{
+    for (int row = 0; row < rows; row++) {
+        for (int col = 0; col < cols; col++) {
+            Vals[row][col] = Vals[row][col] / Scalar;
+        }
+    }
+    
+}
 
 void NN::Matrix::RandomWeightInit()
 {

@@ -68,22 +68,7 @@ namespace NN
         {
             Matrix MultipliedMatrix(this->rows, SecondMatrix.cols);
             
-            if(this->cols == SecondMatrix.rows && this->cols != SecondMatrix.cols)
-            {
-                
-                for(int RowMatrixOne = 0; RowMatrixOne < this->rows; RowMatrixOne++)
-                {
-                    for(int SharedDimension = 0; SharedDimension < this->cols; SharedDimension++)
-                    {
-                      
-                        for(int ColMatrixTwo = 0; ColMatrixTwo < SecondMatrix.getCols(); ColMatrixTwo++)
-                        {
-                                MultipliedMatrix(RowMatrixOne, ColMatrixTwo) += Vals[RowMatrixOne][SharedDimension] * SecondMatrix(SharedDimension, ColMatrixTwo);
-                        }
-                    }
-                }
-            }
-            else if(this->cols == SecondMatrix.cols && this->rows == SecondMatrix.rows)
+            if(this->cols == SecondMatrix.cols && this->rows == SecondMatrix.rows)
             {
                 for(int row = 0; row < this->rows; row++)
                 {
@@ -93,6 +78,33 @@ namespace NN
                     }
                 }
             }
+            else if(this->cols == 1 && SecondMatrix.rows == 1 && SecondMatrix.cols == 1)
+            {
+                for(int row = 0; row < this->rows; row++)
+                {
+                    for(int col = 0; col < 1; col++)
+                    {
+                            MultipliedMatrix(row, col) = Vals[row][col] * SecondMatrix(0, 0);
+                    }
+                }
+                
+            }
+            else if(this->cols == SecondMatrix.rows)
+            {
+                
+                for(int RowMatrixOne = 0; RowMatrixOne < this->rows; RowMatrixOne++)
+                {
+                    for(int SharedDimension = 0; SharedDimension < this->cols; SharedDimension++)
+                    {
+                      
+                        for(int ColMatrixTwo = 0; ColMatrixTwo < SecondMatrix.getCols(); ColMatrixTwo++)
+                        {
+                            MultipliedMatrix(RowMatrixOne, ColMatrixTwo) += Vals[RowMatrixOne][SharedDimension] * SecondMatrix(SharedDimension, ColMatrixTwo);
+                        }
+                    }
+                }
+            }
+           
             
             
             return MultipliedMatrix;
@@ -145,7 +157,7 @@ namespace NN
         
         //Scalar Multiplication
         void MultiplyByScalar(float Scalar);
-        
+        void DivideByScalar(float Scalar);
         
         
         //Return Transposed Matrix; ex. 3 x 2 -> 2 x 3
