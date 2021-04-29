@@ -8,6 +8,7 @@
 #include "Matrix.h"
 #include <stdio.h>
 #include <time.h>
+#include <math.h>
 
 
 //MARK: Constructor and Destructor
@@ -30,9 +31,10 @@ NN::Matrix::Matrix(int rows, int cols)
     
 }
 
+
 NN::Matrix::~Matrix()
 {
-   
+    //delete Vals;
 }
 
 
@@ -58,14 +60,53 @@ void NN::Matrix::DivideByScalar(float Scalar)
     
 }
 
+
+float GetRandomNum()
+{
+    float x = float(rand() % 100 + 1) / 100;
+    
+    return x;
+}
+
 void NN::Matrix::RandomWeightInit()
 {
     srand(int(time(NULL)));
-    for (int row = 0; row < rows; row++) {
-        for (int col = 0; col < cols; col++) {
-            Vals[row][col] = float(rand() % 100 + 1) / 100;
+    
+    std::vector<float> RandomWeightSequence;
+    
+    for (int n = 0; n < rows * cols; n++) {
+        RandomWeightSequence.push_back(GetRandomNum());
+    }
+    
+    for (int n = 0; n < RandomWeightSequence.size(); n++) {
+        for(int j = n + 1; j < RandomWeightSequence.size(); j++)
+        {
+            bool SameNumber = RandomWeightSequence[n] == RandomWeightSequence[j];
+            while(SameNumber)
+            {
+                RandomWeightSequence[n] = GetRandomNum();
+                
+                if(RandomWeightSequence[n] != RandomWeightSequence[j])
+                {
+                    SameNumber = false;
+                }
+                
+            }
         }
     }
+    
+    for(int n = 0; n < rows; n++)
+    {
+        for (int j = 0; j < cols; j++) {
+            
+            for(int i = 0; i < RandomWeightSequence.size(); i++)
+            {
+                int IndexNum = i;
+                Vals[n][j] = RandomWeightSequence[IndexNum];
+            }
+        }
+    }
+   
 }
 
 
@@ -132,7 +173,48 @@ void NN::Matrix::ActivateNeurons(ActivationFunctions AF)
             }
             
             break;
+      
+        case TANH:
+            
+            for(int row = 0; row < rows; row++)
+            {
+                for (int col = 0; col < cols; col++) {
+                    Vals[row][col] = tanh(Vals[row][col]);
+                }
+            }
+            
+            break;
+            
+        case D_TANH:
+            
+            for(int row = 0; row < rows; row++)
+            {
+                for (int col = 0; col < cols; col++) {
+                    Vals[row][col] = dtanh(Vals[row][col]);
+                }
+            }
+            
+            break;
         default:
+            break;
+    }
+}
+
+
+void NN::Matrix::TakeDerivative(ActivationFunctions AF)
+{
+    switch (AF) {
+        case SIGMOID:
+            ActivateNeurons(D_SIGMOID);
+            break;
+        case RELU:
+            ActivateNeurons(D_RELU);
+            break;
+        case TANH:
+            ActivateNeurons(D_TANH);
+            break;
+        default:
+            std::cout << "Derivative not taken. Supplied Activationfunction is non existant." << std::endl;
             break;
     }
 }
@@ -146,18 +228,18 @@ float NN::Matrix::Sigmoid(float x)
 
 float NN::Matrix::D_Sigmoid(float x)
 {
-    return Sigmoid(x) * (1 - Sigmoid(x));
+    return x * (1 - x);
 }
 
 float NN::Matrix::Relu(float x)
 {
-    if(x < 0)
+    if(x > 0)
     {
-        return 0.f;
+        return x;
     }
     else
     {
-        return x;
+        return 0;
     }
 }
 
@@ -168,4 +250,15 @@ float NN::Matrix::D_Relu(float x)
         return 1;
     }
     return 0;
+}
+
+
+float NN::Matrix::tanh(float x)
+{
+    return tanhf(x);
+}
+
+float NN::Matrix::dtanh(float x)
+{
+    return 1 - (x*x);
 }

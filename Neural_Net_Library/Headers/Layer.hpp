@@ -22,10 +22,7 @@ namespace NN {
         
         //Feedforwards layer
         void feedforwardValues(ActivationFunctions Ac);
-        
-        //Calculate Layer Error for Backprop
-        void CalculateErrorforLayer();
-        
+            
         //Override Val Matrix -> Only for Input and feedforward
         void OverrideValMatrix(Matrix* InputValMatrix);
         
@@ -35,6 +32,7 @@ namespace NN {
         //Get Val or Weight Matrix
         Matrix GetValMatrix();
         Matrix GetWeightMatrix();
+        Matrix GetSumMatrix();
 
         
     private:
@@ -43,6 +41,7 @@ namespace NN {
         Matrix* ValMatrix;
         Matrix* WeightMatrix;
         Layer* PreviousLayer;
+
         
         Matrix* ErrorValMatrix;
         

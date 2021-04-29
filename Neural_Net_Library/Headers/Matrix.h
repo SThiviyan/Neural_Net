@@ -19,7 +19,9 @@ namespace NN
         RELU,
         D_RELU,
         SIGMOID,
-        D_SIGMOID
+        D_SIGMOID,
+        TANH,
+        D_TANH
     };
 
 
@@ -61,8 +63,18 @@ namespace NN
                     }
                 }
             }
-        };
+        }
         
+        void operator = (const std::vector<float> M)
+        {
+            if(this->rows == M.size())
+            {
+                for(int n = 0; n < this->rows; n++)
+                {
+                  Vals[n][0] = M[n];
+                }
+            }
+        }
       
         Matrix operator * ( Matrix& SecondMatrix)
         {
@@ -131,8 +143,7 @@ namespace NN
             
             return NewMatrix;
         }
-        
-        
+      
         Matrix operator - (Matrix& SecondMatrix)
         {
             Matrix NewMatrix = Matrix(this->rows, this->cols);
@@ -170,10 +181,13 @@ namespace NN
         
         //Activations
         void ActivateNeurons(ActivationFunctions AF);
+        void TakeDerivative(ActivationFunctions AF);
         float Sigmoid(float x);
         float D_Sigmoid(float x);
         float Relu(float x);
         float D_Relu(float x);
+        float tanh(float x);
+        float dtanh(float x);
         
         
         //MARK: GET functions
