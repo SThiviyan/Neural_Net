@@ -10,6 +10,7 @@
 
 #include <iostream>
 #include <vector>
+#include "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1/map"
 #include "Layer.hpp"
 
 namespace NN {
@@ -47,11 +48,14 @@ namespace NN {
         Layer* Layers;
         
         float Cost;
-        std::vector<std::vector<Matrix>> ErrorGradients;
         int NumBatch;
 
         float LearningRate;
         ActivationFunctions Ac;
+        
+        std::map<std::vector<float>, std::vector<float>> TrainingData;
+        std::map<std::vector<float>, std::vector<float>> TestingData;
+
     };
 
 

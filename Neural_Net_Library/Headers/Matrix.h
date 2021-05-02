@@ -143,6 +143,28 @@ namespace NN
             
             return NewMatrix;
         }
+        
+        Matrix operator += ( Matrix& SecondMatrix)
+        {
+            Matrix NewMatrix = Matrix(this->rows, this->cols);
+
+            if(this->rows == SecondMatrix.rows && this->cols == SecondMatrix.cols)
+            {
+                for (int n = 0; n < rows; n++) {
+                    for (int j = 0; j < cols; j++) {
+                        NewMatrix(n, j) = Vals[n][j] + SecondMatrix(n, j);
+                    }
+                }
+               
+            }
+            else
+            {
+                std::cout << "Can't Add them together" << std::endl;
+            }
+            
+            
+            return NewMatrix;
+        }
       
         Matrix operator - (Matrix& SecondMatrix)
         {

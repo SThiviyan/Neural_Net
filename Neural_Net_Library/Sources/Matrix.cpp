@@ -65,6 +65,7 @@ float GetRandomNum()
 {
     float x = float(rand() % 100 + 1) / 100;
     
+  
     return x;
 }
 

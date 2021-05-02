@@ -45,79 +45,66 @@ void NN::NN::TrainNetwork(std::vector<float> Trainingsset, std::vector<float> Ta
 {
     if(Targets.size() % topology[LayerNum - 1] == 0 && Trainingsset.size() % topology[0] == 0)
     {
-        
+        //MARK: Important Numbers
         int NumBatches = int(Trainingsset.size() / topology[0]);
         this->NumBatch = NumBatches;
         
-        int BatchSize = topology[0];
+        //MARK: Sizes of Batches
+        int InputBatchSize = topology[0];
         int TargetBatchSize = topology[LayerNum - 1];
         
-        for(int j = 0; j < 10; j++)
+      
+        //MARK: TRAINING PROCESS (1000 = NumIterations)
+        for(int j = 0; j < 100000; j++)
         {
-            std::cout << "Iteration " << j << std::endl;
-          for(int n = 1; n <= NumBatches; n++)
+          std::cout << "Iteration " << j << std::endl;
+            
+          //Going through Batches
+          for(int n = 1; n <= this->NumBatch; n++)
           {
-              Matrix InputMatrix = Matrix(BatchSize, 1);
-            
-              std::vector<float> CurrentBatch;
-              for (int r = (BatchSize * n) - BatchSize; r < (BatchSize * n); r++) {
-                  CurrentBatch.push_back(Trainingsset[r]);
+              //Inputs and Targets for Backprop
+              Matrix InputMatrix = Matrix(InputBatchSize, 1);
+              std::vector<float> CurrentInputs;
+              std::vector<float> CurrentTargets;
+              
+              //MARK: Getting corresponding Inputs and Outputs
+              for (int r = (InputBatchSize * n) - InputBatchSize; r < (InputBatchSize * n); r++) {
+                  CurrentInputs.push_back(Trainingsset[r]);
               }
-            
-              for (int z = 0; z < BatchSize; z++) {
-                  InputMatrix(z, 0) = CurrentBatch[z];
-              }
-            
-         
-            
-              Layers[0].OverrideValMatrix(&InputMatrix);
-            
-              feedforward();
-           
-                     
-              std::vector<float> BackpropCurrentTargets;
-          
-              for (int r = (TargetBatchSize * n) - TargetBatchSize; r < (TargetBatchSize * n); r++) {
-                  BackpropCurrentTargets.push_back(Targets[r]);
-                  
-              }
-                          
-              backpropagate(BackpropCurrentTargets);
+              InputMatrix = CurrentInputs;
               
             
+              for (int r = (TargetBatchSize * n) - TargetBatchSize; r < (TargetBatchSize * n); r++) {
+                  CurrentTargets.push_back(Targets[r]);
+              }
+                  
+              
+              //Adding to Data Dictionary
+              TestingData.insert(std::make_pair(CurrentInputs, CurrentTargets));
+            
+              
+              //Training and Backprop process
+              Layers[0].OverrideValMatrix(&InputMatrix);
+              feedforward();
+              backpropagate(CurrentTargets);
+            
+          }
+          std::cout << std::endl << std::endl << std::endl << std::endl;
         }
-            std::cout << std::endl << std::endl << std::endl << std::endl;
-        }
+        
+        
+        
     }
     else
     {
-        std::cout << "Training Sets and their solutions have to have the same size as topology!";
+        std::cout << "Training Sets and their Targets have to have the same size as topology!";
         return;
     }
 }
 
 void NN::NN::TestNetwork(std::vector<float> Testingset, std::vector<float> Targets)
 {
-    /*
-    if(Testingset.size() / topology[0]  == Targets.size() / topology[LayerNum - 1])
-    {
-        for (int n = 0; n < Testingset.size() / topology[0]; n++) {
-            
-            Matrix InputValMatrix = Matrix(topology[0], 1);
-            
-            for (int i = 0; i < topology[0]; i++) {
-                InputValMatrix(n, 0) = Testingset[n + i];
-            }
-            
-            Layers[0].OverrideValMatrix(&InputValMatrix);
-            
-            std::cout << "TESTRUN #" << n << ":" << std::endl;
-            PrintAll();
-            //std::cout << "Error:" << CalculateCost(Targets);
-        }
-    }
-    */
-    
+   
     
 }
 
@@ -147,6 +134,7 @@ std::vector<float> NN::NN::RunNetwork(std::vector<float> InputSet)
 
 void NN::NN::feedforward()
 {
+    //MARK: feedforwarding through the Network
     for(int L = 1; L < LayerNum; L++)
     {
         this->Layers[L].feedforwardValues(this->Ac);
@@ -156,30 +144,29 @@ void NN::NN::feedforward()
 
 void NN::NN::backpropagate(std::vector<float> CurrentTargets)
 {
-    
-    
-    std::cout << "Cost:" << CalculateCost(CurrentTargets) << std::endl;
+    std::cout << "Cost:" << CalculateCost(CurrentTargets) << " |  Current Input: (" << Layers[0].GetValMatrix()(0, 0) <<  "|" << Layers[0].GetValMatrix()(1, 0) << ")" <<  " | Current Output:" << Layers[LayerNum - 1].GetValMatrix()(0, 0) << std::endl;
 
     
     //Setting Indeces
     int LayerIndex = LayerNum - 1;
 
     //Transforming Targets from Vector to Matrix
-    Matrix Targets = Matrix(CurrentTargets.size(), 1);
+    Matrix Targets = Matrix(int(CurrentTargets.size()), 1);
     Targets = CurrentTargets;
     
     
     //Looping backwards through the Network -> for Backprop
     
-    Matrix* Prev_Gradient;
+    Matrix* Prev_Gradient = nullptr;
     
     for (int n = LayerIndex; n > 0; n--) {
         
         if(n == LayerIndex)
         {
             //MARK: Derivative Cost_Activation
-            Matrix Activations = Layers[LayerIndex].GetValMatrix();
+            Matrix Activations = Layers[n].GetValMatrix();
             Matrix D_C_A = Targets - Activations;
+            //D_C_A.MultiplyByScalar(-1);
             
             //MARK: Derivative Activation_Sum
             Matrix D_A_Z = Activations;
@@ -187,15 +174,14 @@ void NN::NN::backpropagate(std::vector<float> CurrentTargets)
        
             //MARK: Gradient calculating via ChainRule
             Matrix Gradient = D_C_A * D_A_Z;
-            Gradient.MultiplyByScalar(-1);
             Prev_Gradient = &Gradient;
             //Gradient = Gradient * D_A_Z;
             
             //MARK: Deltaweights -> Calculated with Chain Rule
             // dC/dW = dC/da * da/dz * dz/dw
             //PrevActivations needed because dz/dw = a^l-1
-            Matrix PrevActivations = Layers[LayerIndex - 1].GetValMatrix();
-            Matrix Deltaweights = (PrevActivations * Gradient).GetTransposedMatrix();
+            Matrix PrevActivations = Layers[n - 1].GetValMatrix().GetTransposedMatrix();
+            Matrix Deltaweights = Gradient * PrevActivations;
             Deltaweights.MultiplyByScalar(LearningRate);
 
            
@@ -209,16 +195,15 @@ void NN::NN::backpropagate(std::vector<float> CurrentTargets)
             Matrix Weights = Layers[n].GetWeightMatrix().GetTransposedMatrix();
             Matrix D_A_Z = Layers[n].GetValMatrix();
             D_A_Z.TakeDerivative(Ac);
-            Matrix Gradient = D_A_Z * Weights * *Prev_Gradient;
+            Matrix Gradient = (Weights * *Prev_Gradient) * D_A_Z;
             Prev_Gradient = &Gradient;
-            
+             
             //MARK: Deltaweights
             Matrix PrevActivations = Layers[n - 1].GetValMatrix().GetTransposedMatrix();
             Matrix DeltaWeights = Gradient * PrevActivations;
             DeltaWeights.MultiplyByScalar(LearningRate);
             
             Layers[n - 1].OverrideWeightMatrix(&DeltaWeights);
-            //int j = 0;
         }
         
         
@@ -230,8 +215,6 @@ void NN::NN::backpropagate(std::vector<float> CurrentTargets)
 
 float NN::NN::CalculateCost(std::vector<float> CurrentTargets)
 {
-    //feedforward();
-    //PrintAll();
     Matrix OutputMatrix = Layers[LayerNum - 1].GetValMatrix();
         
     float Cost = 0;
@@ -244,9 +227,13 @@ float NN::NN::CalculateCost(std::vector<float> CurrentTargets)
         Cost+= Temp;
     }
     
-    
     return Cost;
 }
+
+
+
+
+
 
 void NN::NN::PrintAll()
 {
