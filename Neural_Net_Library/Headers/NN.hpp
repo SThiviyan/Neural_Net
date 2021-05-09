@@ -53,8 +53,8 @@ namespace NN {
         float LearningRate;
         ActivationFunctions Ac;
         
-        std::map<std::vector<float>, std::vector<float>> TrainingData;
-        std::map<std::vector<float>, std::vector<float>> TestingData;
+        //std::map<std::vector<float>, std::vector<float>> TrainingData;
+        //std::map<std::vector<float>, std::vector<float>> TestingData;
 
     };
 

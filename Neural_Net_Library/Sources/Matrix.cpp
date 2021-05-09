@@ -20,21 +20,53 @@ NN::Matrix::Matrix(int rows, int cols)
     
     
     //Allocating Memory for Columns
-    Vals = new float*[rows];
-    
+
     for(int n = 0; n < rows; n++)
     {
-        //Now for Rows
-        Vals[n] = new float[cols];
+        Vals.push_back(std::vector<float>());
+        for (int j = 0; j < cols; j++) {
+            Vals[n].push_back(0);
+        }
     }
     
     
 }
 
 
+NN::Matrix::Matrix(std::vector<float> Array)
+{
+    Vals.clear();
+    
+    for(int n = 0; n < Array.size(); n++)
+    {
+        Vals.push_back(std::vector<float>());
+        Vals[n].push_back(Array[n]);
+    }
+    
+    this->cols = 1;
+    this->rows = int(Array.size());
+}
+
+
+NN::Matrix::Matrix(std::vector<std::vector<float>> Array)
+{
+    Vals.clear();
+    
+    for(int n = 0; n < Array.size(); n++)
+    {
+        Vals.push_back(std::vector<float>());
+        for (int j = 0; j < Array[0].size(); j++) {
+            Vals[n].push_back(Array[n][j]);
+        }
+    }
+    
+    this->cols = int(Array[0].size());
+    this->rows = int(Array.size());
+}
+
+
 NN::Matrix::~Matrix()
 {
-    //delete Vals;
 }
 
 
@@ -72,9 +104,10 @@ float GetRandomNum()
 void NN::Matrix::RandomWeightInit()
 {
     srand(int(time(NULL)));
-    
+   
+    /*
     std::vector<float> RandomWeightSequence;
-    
+   
     for (int n = 0; n < rows * cols; n++) {
         RandomWeightSequence.push_back(GetRandomNum());
     }
@@ -95,16 +128,14 @@ void NN::Matrix::RandomWeightInit()
             }
         }
     }
+     */
     
     for(int n = 0; n < rows; n++)
     {
         for (int j = 0; j < cols; j++) {
             
-            for(int i = 0; i < RandomWeightSequence.size(); i++)
-            {
-                int IndexNum = i;
-                Vals[n][j] = RandomWeightSequence[IndexNum];
-            }
+            Vals[n][j] = GetRandomNum();
+            
         }
     }
    
@@ -205,11 +236,11 @@ void NN::Matrix::ActivateNeurons(ActivationFunctions AF)
 void NN::Matrix::TakeDerivative(ActivationFunctions AF)
 {
     switch (AF) {
-        case SIGMOID:
-            ActivateNeurons(D_SIGMOID);
-            break;
         case RELU:
             ActivateNeurons(D_RELU);
+            break;
+        case SIGMOID:
+            ActivateNeurons(D_SIGMOID);
             break;
         case TANH:
             ActivateNeurons(D_TANH);
@@ -234,23 +265,26 @@ float NN::Matrix::D_Sigmoid(float x)
 
 float NN::Matrix::Relu(float x)
 {
-    if(x > 0)
+    if(x > 0.f)
     {
         return x;
     }
     else
     {
-        return 0;
+        return 0.f;
     }
 }
 
 float NN::Matrix::D_Relu(float x)
 {
-    if(x > 0.0f)
+    if(x < 0.0f)
     {
-        return 1;
+        return 0.f;
     }
-    return 0;
+    else
+    {
+        return 1.f;
+    }
 }
 
 
@@ -263,3 +297,7 @@ float NN::Matrix::dtanh(float x)
 {
     return 1 - (x*x);
 }
+
+
+
+

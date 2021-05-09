@@ -31,13 +31,15 @@ namespace NN
         
         //MARK: Constructor and Destructor
         Matrix(int rows, int cols);
+        Matrix(std::vector<float> Array);
+        Matrix(std::vector<std::vector<float>> Array);
         ~Matrix();
         
         
         //MARK: Acces to Elements / Mathematical stuff
         
         //Operators
-        float &operator () (int m, int n) const {
+        float &operator () (int m, int n) {
             
             if(m >= rows || n >= cols)
             {
@@ -52,17 +54,23 @@ namespace NN
             
         }
         
-        void operator = (const Matrix M){
-            if(this->rows == M.rows && this->cols == M.cols)
+        void operator = (Matrix M){
+          
+            Vals.clear();
+            
+            for(int n = 0; n < M.getRows(); n++)
             {
-                for(int n = 0; n < this->cols; n++)
+                Vals.push_back(std::vector<float>());
+                for(int j = 0; j < M.getCols(); j++)
                 {
-                    for(int j = 0; j < this->rows; j++)
-                    {
-                        Vals[n][j] = M.operator()(n, j);
-                    }
+                        //Vals[n].push_back(float());
+                    Vals[n].push_back(M(n, j));
                 }
             }
+                
+            this->rows = M.getRows();
+            this->cols = M.getCols();
+            
         }
         
         void operator = (const std::vector<float> M)
@@ -221,7 +229,7 @@ namespace NN
     private:
         
         //MARK: Matrix Properties
-        float** Vals;
+        std::vector<std::vector<float>> Vals;
         int rows;
         int cols;
         

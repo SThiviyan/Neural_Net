@@ -14,12 +14,12 @@ int main()
     std::vector<int> topology;
     topology.push_back(2);
     topology.push_back(3);
-    topology.push_back(2);
+    //topology.push_back(2);
     topology.push_back(1);
     
     NN::NN NeuralNet = NN::NN(topology,
                               NN::SIGMOID,
-                              0.1);
+                              0.5);
     
     
     std::vector<float> Trainingset = {1, 1, 0, 0, 1, 0, 0, 1};

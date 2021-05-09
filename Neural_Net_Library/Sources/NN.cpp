@@ -8,6 +8,7 @@
 #include "NN.hpp"
 
 
+
 NN::NN::NN(std::vector<int> topology, ActivationFunctions Ac, float LearningRate)
 {
     this->topology = topology;
@@ -36,7 +37,7 @@ NN::NN::NN(std::vector<int> topology, ActivationFunctions Ac, float LearningRate
 
 NN::NN::~NN()
 {
-    
+    delete Layers;
 }
 
 
@@ -80,14 +81,14 @@ void NN::NN::TrainNetwork(std::vector<float> Trainingsset, std::vector<float> Ta
                   
               
               //Adding to Data Dictionary
-              TestingData.insert(std::make_pair(CurrentInputs, CurrentTargets));
+              //TestingData.insert(std::make_pair(CurrentInputs, CurrentTargets));
             
               
               //Training and Backprop process
               Layers[0].OverrideValMatrix(&InputMatrix);
               feedforward();
               backpropagate(CurrentTargets);
-            
+              
           }
           std::cout << std::endl << std::endl << std::endl << std::endl;
         }
@@ -151,13 +152,13 @@ void NN::NN::backpropagate(std::vector<float> CurrentTargets)
     int LayerIndex = LayerNum - 1;
 
     //Transforming Targets from Vector to Matrix
-    Matrix Targets = Matrix(int(CurrentTargets.size()), 1);
-    Targets = CurrentTargets;
+    Matrix Targets = CurrentTargets;
+
     
     
     //Looping backwards through the Network -> for Backprop
     
-    Matrix* Prev_Gradient = nullptr;
+    Matrix Prev_Gradient = Matrix(1, 1);
     
     for (int n = LayerIndex; n > 0; n--) {
         
@@ -174,7 +175,7 @@ void NN::NN::backpropagate(std::vector<float> CurrentTargets)
        
             //MARK: Gradient calculating via ChainRule
             Matrix Gradient = D_C_A * D_A_Z;
-            Prev_Gradient = &Gradient;
+            Prev_Gradient = Gradient;
             //Gradient = Gradient * D_A_Z;
             
             //MARK: Deltaweights -> Calculated with Chain Rule
@@ -195,8 +196,8 @@ void NN::NN::backpropagate(std::vector<float> CurrentTargets)
             Matrix Weights = Layers[n].GetWeightMatrix().GetTransposedMatrix();
             Matrix D_A_Z = Layers[n].GetValMatrix();
             D_A_Z.TakeDerivative(Ac);
-            Matrix Gradient = (Weights * *Prev_Gradient) * D_A_Z;
-            Prev_Gradient = &Gradient;
+            Matrix Gradient = (Weights * Prev_Gradient) * D_A_Z;
+            Prev_Gradient = Gradient;
              
             //MARK: Deltaweights
             Matrix PrevActivations = Layers[n - 1].GetValMatrix().GetTransposedMatrix();
