@@ -10,7 +10,6 @@
 
 #include <iostream>
 #include <vector>
-#include "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1/map"
 #include "Layer.hpp"
 
 namespace NN {

@@ -11,6 +11,7 @@
 		C555996325EC21C700AF9369 /* Matrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C555996225EC21C700AF9369 /* Matrix.cpp */; };
 		C555996825EC21F300AF9369 /* Layer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C555996625EC21F300AF9369 /* Layer.cpp */; };
 		C555996C25EC221900AF9369 /* NN.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C555996A25EC221900AF9369 /* NN.cpp */; };
+		C5C972232654FACB00C4B703 /* DataManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C5C972212654FACB00C4B703 /* DataManager.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -34,6 +35,8 @@
 		C555996725EC21F300AF9369 /* Layer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Layer.hpp; sourceTree = "<group>"; };
 		C555996A25EC221900AF9369 /* NN.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = NN.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		C555996B25EC221900AF9369 /* NN.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = NN.hpp; sourceTree = "<group>"; };
+		C5C972212654FACB00C4B703 /* DataManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DataManager.cpp; sourceTree = "<group>"; };
+		C5C972222654FACB00C4B703 /* DataManager.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = DataManager.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +69,7 @@
 		C555995625EC216D00AF9369 /* Neural_Net_Library */ = {
 			isa = PBXGroup;
 			children = (
+				C5C9721E2654FA9600C4B703 /* DataManagment */,
 				C555995F25EC219500AF9369 /* Headers */,
 				C555996025EC21A100AF9369 /* Sources */,
 				C555995725EC216D00AF9369 /* main.cpp */,
@@ -89,6 +93,31 @@
 				C555996225EC21C700AF9369 /* Matrix.cpp */,
 				C555996625EC21F300AF9369 /* Layer.cpp */,
 				C555996A25EC221900AF9369 /* NN.cpp */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		C5C9721E2654FA9600C4B703 /* DataManagment */ = {
+			isa = PBXGroup;
+			children = (
+				C5C972202654FAA900C4B703 /* Sources */,
+				C5C9721F2654FAA200C4B703 /* Headers */,
+			);
+			path = DataManagment;
+			sourceTree = "<group>";
+		};
+		C5C9721F2654FAA200C4B703 /* Headers */ = {
+			isa = PBXGroup;
+			children = (
+				C5C972222654FACB00C4B703 /* DataManager.hpp */,
+			);
+			path = Headers;
+			sourceTree = "<group>";
+		};
+		C5C972202654FAA900C4B703 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				C5C972212654FACB00C4B703 /* DataManager.cpp */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -150,6 +179,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C555996825EC21F300AF9369 /* Layer.cpp in Sources */,
+				C5C972232654FACB00C4B703 /* DataManager.cpp in Sources */,
 				C555996325EC21C700AF9369 /* Matrix.cpp in Sources */,
 				C555995825EC216D00AF9369 /* main.cpp in Sources */,
 				C555996C25EC221900AF9369 /* NN.cpp in Sources */,

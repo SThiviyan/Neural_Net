@@ -78,10 +78,6 @@ void NN::NN::TrainNetwork(std::vector<float> Trainingsset, std::vector<float> Ta
               for (int r = (TargetBatchSize * n) - TargetBatchSize; r < (TargetBatchSize * n); r++) {
                   CurrentTargets.push_back(Targets[r]);
               }
-                  
-              
-              //Adding to Data Dictionary
-              //TestingData.insert(std::make_pair(CurrentInputs, CurrentTargets));
             
               
               //Training and Backprop process
