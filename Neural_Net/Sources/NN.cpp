@@ -99,11 +99,6 @@ void NN::NN::TrainNetwork(std::vector<float> Trainingsset, std::vector<float> Ta
     }
 }
 
-void NN::NN::TestNetwork(std::vector<float> Testingset, std::vector<float> Targets)
-{
-   
-    
-}
 
 std::vector<float> NN::NN::RunNetwork(std::vector<float> InputSet)
 {

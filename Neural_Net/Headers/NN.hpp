@@ -27,7 +27,6 @@ namespace NN {
         
         //Training, Test; Input is all the numbers(separated by layernum)
         void TrainNetwork(std::vector<float> Trainingsset, std::vector<float> Targets);
-        void TestNetwork(std::vector<float> Testingset, std::vector<float> Targets);
         
         //Just To run without any backpropagation
         std::vector<float> RunNetwork(std::vector<float> InputSet);
@@ -52,9 +51,6 @@ namespace NN {
         float LearningRate;
         ActivationFunctions Ac;
         
-        //std::map<std::vector<float>, std::vector<float>> TrainingData;
-        //std::map<std::vector<float>, std::vector<float>> TestingData;
-
     };
 
 
